@@ -60,6 +60,7 @@ const triviaText = document.querySelector('.triviaText');
 const fronts = document.querySelectorAll('.front');
 const cardsInPlay = document.querySelectorAll('.card');
 const backs = document.querySelectorAll('.back');
+const gameBoard = document.querySelector('.gameBoard');
 
 function createDeck(array) {
 	k = 0;
@@ -91,18 +92,25 @@ function createBoard() {
 		backs[i].addEventListener('click', flipCard);
 		backs[i].setAttribute('data-lock', 0);
 		fronts[i].setAttribute('src', cardPlayDeck[i].jpg);
+		trivia.setAttribute('data-show', 0);
 	}
 }
 
 function flipCard() {
 	clickCount++;
-	if (this.dataset.lock === '0' && clickCount <= 2) {
+	if (trivia.dataset.show === '1') {
+		hideTrivia();
+	}
+
+	if (
+		this.dataset.lock === '0' &&
+		clickCount <= 2 &&
+		cardCheck.length < 2 &&
+		trivia.dataset.show === '0'
+	) {
 		this.classList.add('hide');
 		cardId = this.parentNode.getAttribute('data-id');
 		cardCheck.push(cardId);
-
-		triviaImg.setAttribute('src', cardPlayDeck[cardId].jpg);
-		triviaText.appendChild(document.createTextNode(cardPlayDeck[cardId].text));
 	}
 
 	if (cardCheck.length >= 2 && clickCount > 2) {
@@ -111,22 +119,25 @@ function flipCard() {
 }
 
 function hideTrivia() {
-	trivia.classList.remove('.show');
+	trivia.classList.add('remove');
+	trivia.setAttribute('data-show', '0');
+	clickCount = 0;
 }
-
-trivia.addEventListener('click', hideTrivia);
 
 function checkForMatch() {
 	if (cardCheck[0] === cardCheck[1]) {
-		id = cardCheck[0];
-		trivia.classList.add('.show');
 		for (i = 0; i < Object.keys(cardsInPlay).length; i++) {
-			if (cardsInPlay[i].dataset.id === id) {
+			if (cardsInPlay[i].dataset.id === cardCheck[0]) {
 				backs[i].setAttribute('data-lock', 1);
+				triviaText.appendChild(document.createTextNode(cardPlayDeck[i].text));
+				triviaImg.setAttribute('src', cardPlayDeck[i].jpg);
 			}
-			cardCheck = [];
-			clickCount = 0;
 		}
+		trivia.setAttribute('data-show', 1);
+		trivia.classList.remove('remove');
+
+		cardCheck = [];
+		clickCount = 0;
 	} else {
 		for (i = 0; i < Object.keys(cardsInPlay).length; i++) {
 			if (backs[i].dataset.lock === '0') {

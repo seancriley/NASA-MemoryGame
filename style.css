@@ -5,6 +5,39 @@
 	justify-content: center;
 	grid-gap: 10px;
 }
+header {
+	text-align: center;
+	font-size: 200%;
+	margin-bottom: 20px;
+}
+footer{
+    text-align: center;
+    font-size: small;
+}
+.trivia {
+	align-items: center;
+
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 50%;
+	color: white;
+	background: Black;
+	border: black solid 5px;
+	transform: translate(-50%, -80%);
+	padding: 4rem;
+	text-align: center;
+	z-index: 10;
+	pointer-events: none;
+	transition: all 250ms ease;
+}
+.triviaImg {
+	height: 200px;
+	width: 300px;
+}
+.triviaText {
+	text-align: left;
+}
 
 .card {
 	display: grid;
@@ -21,8 +54,8 @@
 .back {
 	border-radius: 8px;
 	width: 100px;
-    height: 200px;
-}  
+	height: 200px;
+}
 
 .hide {
 	visibility: hidden;
@@ -30,10 +63,6 @@
 
 .remove {
 	display: none;
-}
-
-.show {
-	display: block;
 }
 
 .one {
