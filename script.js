@@ -56,9 +56,9 @@ let cardCheck = [];
 const trivia = document.querySelector('.trivia');
 const triviaImg = document.querySelector('.triviaImg');
 const triviaText = document.querySelector('.triviaText');
-const front=document.querySelectorAll('.front');
+const fronts = document.querySelectorAll('.front');
 const cardsInPlay = document.querySelectorAll('.card');
-
+const backs = document.querySelectorAll('.back');
 
 function createDeck(array) {
 	k = 0;
@@ -80,32 +80,27 @@ function randomArray(array) {
 		array[j] = temp;
 	}
 }
+createDeck(defaultList);
+randomArray(cardPlayDeck);
+createBoard();
 
 function createBoard() {
-	createDeck(defaultList);
-	randomArray(cardPlayDeck);
 	for (i = 0; i < Object.keys(cardPlayDeck).length; i++) {
-		setElement();
+		cardsInPlay[i].setAttribute('data-id', cardPlayDeck[i].id);
+		backs[i].addEventListener('click', flipCard);
+		fronts[i].setAttribute('src', cardPlayDeck[i].jpg);
 	}
 }
-function setElement() {
-	cardElement.setAttribute('src', 'img/back_of_playcard6.jpg');
-	cardElement.setAttribute('data-id', cardPlayDeck[i].id);
-	cardElement.addEventListener('click', flipCard);
-	cardElement.classList.add('card');
-	cardElement.classList.add('back');
-	document.querySelector('.gameBoard').appendChild(cardElement);
-}
-
 
 function flipCard() {
-	cardId = this.getAttribute('data-id');
+
+	
+	cardId = this.parentNode.getAttribute('data-id');
 	cardCheck.push(cardId);
-	this.setAttribute('src', cardPlayDeck[cardId].jpg);
+	this.classList.add('hide');
 	triviaImg.setAttribute('src', cardPlayDeck[cardId].jpg);
 	triviaText.appendChild(document.createTextNode(cardPlayDeck[cardId].text));
 
-	
 	if (cardCheck.length >= 2) {
 		checkForMatch();
 	}
@@ -118,7 +113,6 @@ function hideTrivia() {
 trivia.addEventListener('click', hideTrivia);
 
 function checkForMatch() {
-	
 	if (cardCheck[0] === cardCheck[1]) {
 		id = cardCheck[0];
 		trivia.classList.add('.show');
@@ -130,7 +124,7 @@ function checkForMatch() {
 		}
 	} else {
 		for (i = 0; i < Object.keys(cardsInPlay).length; i++) {
-			cardsInPlay[i].setAttribute('src', 'img/back_of_playcard6.jpg');
+			backs[i].classList.remove('hide');
 			cardCheck = [];
 		}
 	}

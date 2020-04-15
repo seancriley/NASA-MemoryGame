@@ -6,14 +6,23 @@
 	grid-gap: 10px;
 }
 
-.card,
-.front,
-.back {
+.card {
 	display: grid;
 	border-radius: 8px;
 	width: 100px;
 	height: 200px;
 }
+
+.front {
+	border-radius: 8px;
+	width: 100px;
+	height: 200px;
+}
+.back {
+	border-radius: 8px;
+	width: 100px;
+    height: 200px;
+}  
 
 .hide {
 	visibility: hidden;
@@ -31,63 +40,63 @@
 	grid-row: 1;
 	grid-column: 1;
 }
-.two{
-    grid-row: 1;
+.two {
+	grid-row: 1;
 	grid-column: 2;
 }
-.three{
-    grid-row: 1;
+.three {
+	grid-row: 1;
 	grid-column: 3;
 }
-.four{
-    grid-row: 1;
+.four {
+	grid-row: 1;
 	grid-column: 4;
 }
-.five{
-    grid-row: 2;
+.five {
+	grid-row: 2;
 	grid-column: 1;
 }
-.six{
-    grid-row: 2;
+.six {
+	grid-row: 2;
 	grid-column: 2;
 }
-.seven{
-    grid-row: 2;
+.seven {
+	grid-row: 2;
 	grid-column: 3;
 }
-.eight{
-    grid-row: 2;
+.eight {
+	grid-row: 2;
 	grid-column: 4;
 }
-.nine{
-    grid-row: 3;
+.nine {
+	grid-row: 3;
 	grid-column: 1;
 }
-.ten{
-    grid-row: 3;
+.ten {
+	grid-row: 3;
 	grid-column: 2;
 }
-.eleven{
-    grid-row: 3;
+.eleven {
+	grid-row: 3;
 	grid-column: 3;
 }
-.twelve{
-    grid-row: 3;
+.twelve {
+	grid-row: 3;
 	grid-column: 4;
 }
-.thirteen{
-    grid-row: 4;
+.thirteen {
+	grid-row: 4;
 	grid-column: 1;
 }
-.fourteen{
-    grid-row: 4;
+.fourteen {
+	grid-row: 4;
 	grid-column: 2;
 }
-.fifteen{
-    grid-row: 4;
+.fifteen {
+	grid-row: 4;
 	grid-column: 3;
 }
-.sixteen{
-    grid-row: 4;
+.sixteen {
+	grid-row: 4;
 	grid-column: 4;
 }
