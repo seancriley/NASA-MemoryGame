@@ -53,6 +53,7 @@ const defaultList = [
 
 const cardPlayDeck = {};
 let cardCheck = [];
+let clickCount = 0;
 const trivia = document.querySelector('.trivia');
 const triviaImg = document.querySelector('.triviaImg');
 const triviaText = document.querySelector('.triviaText');
@@ -88,20 +89,23 @@ function createBoard() {
 	for (i = 0; i < Object.keys(cardPlayDeck).length; i++) {
 		cardsInPlay[i].setAttribute('data-id', cardPlayDeck[i].id);
 		backs[i].addEventListener('click', flipCard);
+		backs[i].setAttribute('data-lock', 0);
 		fronts[i].setAttribute('src', cardPlayDeck[i].jpg);
 	}
 }
 
 function flipCard() {
+	clickCount++;
+	if (this.dataset.lock === '0' && clickCount <= 2) {
+		this.classList.add('hide');
+		cardId = this.parentNode.getAttribute('data-id');
+		cardCheck.push(cardId);
 
-	
-	cardId = this.parentNode.getAttribute('data-id');
-	cardCheck.push(cardId);
-	this.classList.add('hide');
-	triviaImg.setAttribute('src', cardPlayDeck[cardId].jpg);
-	triviaText.appendChild(document.createTextNode(cardPlayDeck[cardId].text));
+		triviaImg.setAttribute('src', cardPlayDeck[cardId].jpg);
+		triviaText.appendChild(document.createTextNode(cardPlayDeck[cardId].text));
+	}
 
-	if (cardCheck.length >= 2) {
+	if (cardCheck.length >= 2 && clickCount > 2) {
 		checkForMatch();
 	}
 }
@@ -118,14 +122,18 @@ function checkForMatch() {
 		trivia.classList.add('.show');
 		for (i = 0; i < Object.keys(cardsInPlay).length; i++) {
 			if (cardsInPlay[i].dataset.id === id) {
-				cardsInPlay[i].classList.add('hide');
+				backs[i].setAttribute('data-lock', 1);
 			}
 			cardCheck = [];
+			clickCount = 0;
 		}
 	} else {
 		for (i = 0; i < Object.keys(cardsInPlay).length; i++) {
-			backs[i].classList.remove('hide');
+			if (backs[i].dataset.lock === '0') {
+				backs[i].classList.remove('hide');
+			}
 			cardCheck = [];
+			clickCount = 0;
 		}
 	}
 }
