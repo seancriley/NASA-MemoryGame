@@ -48,8 +48,11 @@ const defaultList = [
 		id: 8,
 	},
 ];
-///by khwanchai.phanthong
-// playing card back side
+
+const url =
+	'https://api.nasa.gov/planetary/apod?api_key=jaj7wocDqqP4j2GOMSWI1ZS8RGDACrlM2bqJ6xC9&count=8';
+
+const apiList = [];
 
 const cardPlayDeck = {};
 let cardCheck = [];
@@ -72,6 +75,7 @@ function createDeck(array) {
 			k++;
 		}
 	}
+	randomArray(cardPlayDeck);
 }
 
 function randomArray(array) {
@@ -81,10 +85,31 @@ function randomArray(array) {
 		array[i] = array[j];
 		array[j] = temp;
 	}
+	createBoard();
 }
-createDeck(defaultList);
-randomArray(cardPlayDeck);
-createBoard();
+function choice() {
+	fetch(url)
+		.then((response) => response.json())
+		.then((response) => {
+			for (i = 0; i < Object.keys(response).length; i++) {
+				const tempObj = {
+					jpg: response[i].url,
+					text: `${response[i].explanation} copyright: ${response[i].copyright}`,
+					id: i,
+				};
+
+				apiList.push(tempObj);
+			}
+
+			createDeck(apiList);
+		})
+		.catch((error) => {
+			createDeck(defaultList);
+			alert(`Nasa APOD API has an error. Local APOD info cards will be used.`);
+			console.log(error);
+		});
+}
+choice();
 
 function createBoard() {
 	for (i = 0; i < Object.keys(cardPlayDeck).length; i++) {
